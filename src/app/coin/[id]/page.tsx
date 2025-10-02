@@ -33,8 +33,14 @@ async function getCoinDetail(id: string): Promise<CoinDetail | null> {
   }
 }
 
-export default async function CoinPage({ params }: { params: { id: string } }) {
-  const coin = await getCoinDetail(params.id);
+// ✅ tidak ada any, params aman
+export default async function CoinPage({
+  params,
+}: {
+  params: Record<string, string>;
+}) {
+  const id = params.id;
+  const coin = await getCoinDetail(id);
 
   if (!coin) {
     return (
@@ -82,7 +88,7 @@ export default async function CoinPage({ params }: { params: { id: string } }) {
       </p>
 
       {/* Chart */}
-      <CoinChart id={params.id} />
+      <CoinChart id={id} />
     </div>
   );
 }

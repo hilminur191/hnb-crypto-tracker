@@ -23,7 +23,6 @@ export default function CoinChart({ id }: ChartProps) {
   >({});
 
   useEffect(() => {
-    // kalau data sudah ada di cache → langsung pakai
     if (cache[days]) {
       setData(cache[days]);
       return;
@@ -52,11 +51,10 @@ export default function CoinChart({ id }: ChartProps) {
           }
         );
 
-        // simpan ke cache
         setCache((prev) => ({ ...prev, [days]: formatted }));
         setData(formatted);
-      } catch (error: any) {
-        if (error.name !== "AbortError") {
+      } catch (error: unknown) {
+        if (error instanceof Error && error.name !== "AbortError") {
           console.error("Error fetching chart:", error);
         }
       } finally {
@@ -66,7 +64,7 @@ export default function CoinChart({ id }: ChartProps) {
 
     fetchChart();
 
-    return () => controller.abort(); // batalkan request lama kalau days berubah
+    return () => controller.abort();
   }, [id, days, cache]);
 
   return (
@@ -90,7 +88,6 @@ export default function CoinChart({ id }: ChartProps) {
 
       {/* Chart */}
       {loading ? (
-        // Skeleton loading state
         <div className="animate-pulse h-72 bg-gray-200 dark:bg-gray-700 rounded-lg" />
       ) : (
         <ResponsiveContainer width="100%" height={300}>
