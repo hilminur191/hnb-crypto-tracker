@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Inter } from "next/font/google";
+import Link from "next/link";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Crypto Price Tracker",
@@ -13,17 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bbg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
-        <header className="border-b border-gray-200 dark:border-gray-700">
-          <nav className="max-w-6xl mx-auto flex items-center justify-between p-4">
-            <h1 className="text-xl font-bold">Crypto Tracker</h1>
-            <ul className="flex space-x-4">
-              <li>
-                <a href="/" className="hover:text-blue-500">
-                  Home
-                </a>
-              </li>
-            </ul>
+      <body className={inter.className}>
+        <header className="p-4 bg-gray-900 text-white">
+          <nav className="max-w-6xl mx-auto flex items-center justify-between">
+            <h1 className="text-xl font-bold">
+              <Link href="/">Crypto Tracker</Link>
+            </h1>
           </nav>
         </header>
         <main className="max-w-6xl mx-auto p-4">{children}</main>
